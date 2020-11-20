@@ -94,6 +94,5 @@ document.getElementById('test-button').addEventListener('click', function(){
     }
   }
   generateTitleLinks();
-  function GetId();
-  link.addEventListener('click',GetId)
+
 }
