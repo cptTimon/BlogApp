@@ -52,7 +52,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     chosenArticle.classList.add('active');
   };
 
-  const generateTitleLinks = function(){
+  const generateTitleLinks = function(customSelector = ''){
 
     /* [DONE] remove list of links from left column */
 
@@ -61,7 +61,7 @@ document.getElementById('test-button').addEventListener('click', function(){
 
     /* [DONE] for each article */
 
-    const articles = document.querySelectorAll(articleSelector);
+    const articles = document.querySelectorAll(articleSelector + customSelector);
     console.log(articles);
     let html = '';
     for(let article of articles){
@@ -95,6 +95,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     }
   };
   generateTitleLinks();
+
   function generateTags(){
     /* find all articles */
 
@@ -202,6 +203,8 @@ document.getElementById('test-button').addEventListener('click', function(){
     }
 
     /* execute function "generateTitleLinks" with article selector as argument */
+
+    generateTitleLinks('[data-tags~="' + tag + '"]');
   }
 
   function addClickListenersToTags(){
@@ -222,4 +225,8 @@ document.getElementById('test-button').addEventListener('click', function(){
   }
 
   addClickListenersToTags();
+
+  function generateAuthors (){
+
+  }
 }
