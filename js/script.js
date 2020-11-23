@@ -12,6 +12,7 @@ document.getElementById('test-button').addEventListener('click', function(){
   const activeArticleSelector = '.posts article.active';
   const articleTagsSelector = '.post-tags .list';
   const articleAuthorSelector = '.post-author';
+  const tagsListSelector = '.tags .list';
 
   const titleClickHandler = function(event){
     event.preventDefault();
@@ -126,7 +127,9 @@ document.getElementById('test-button').addEventListener('click', function(){
       console.log(articleTagsArray);
 
       /* [DONE] START LOOP: for each tag */
+
       for (let tag of articleTagsArray) {
+
         /* [DONE] generate HTML of the link */
 
         const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
@@ -153,6 +156,7 @@ document.getElementById('test-button').addEventListener('click', function(){
   generateTags();
 
   const tagClickHandler = function (event){
+
     /* [DONE] prevent default action for this event */
 
     event.preventDefault();
@@ -211,6 +215,7 @@ document.getElementById('test-button').addEventListener('click', function(){
   };
 
   const addClickListenersToTags = function (){
+
     /* [DONE] find all links to tags */
 
     const tags = document.querySelectorAll('a[href^="#tag-"]');
@@ -230,6 +235,7 @@ document.getElementById('test-button').addEventListener('click', function(){
   addClickListenersToTags();
 
   const generateAuthors = function (){
+
   /* [DONE] find all articles */
 
     const articles = document.querySelectorAll(articleSelector);
@@ -273,6 +279,7 @@ document.getElementById('test-button').addEventListener('click', function(){
   generateAuthors();
 
   const authorClickHandler = function (event){
+
     /* [DONE] prevent default action for this event */
 
     event.preventDefault();
@@ -314,6 +321,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     /* [DONE] START LOOP: for each found author link */
 
     for (let author of clickedAuthors){
+
       /* [DONE] add class active */
 
       author.classList.add('active');
@@ -328,6 +336,7 @@ document.getElementById('test-button').addEventListener('click', function(){
   };
 
   const addClickListenersToAuthors = function (){
+
     /* [DONE] find all links to authors */
 
     const authors = document.querySelectorAll('a[href^="#author-"]');
