@@ -1,21 +1,18 @@
-/*
-document.getElementById('test-button').addEventListener('click', function(){
-  const links = document.querySelectorAll('.titles a');
-  console.log('links:', links);
-});
-*/
+'use strict';
 {
-  const titleListSelector = '.titles';
-  const articleSelector = '.post';
-  const articleTitleSelector = '.post-title';
-  const activeArticleLinkSelector = '.titles a.active';
-  const activeArticleSelector = '.posts article.active';
-  const articleTagsSelector = '.post-tags .list';
-  const articleAuthorSelector = '.post-author';
-  const tagsListSelector = 'ul.tags';
   const cloudClassCount = 5;
   const cloudClassPrefix = 'tag-size-';
-  const authorsListSelector = 'ul.authors';
+  const selectors = {
+    titleList: '.titles',
+    article: '.post',
+    articleTitle: '.post-title',
+    activeArticleLink: '.titles a.active',
+    activeArticle: '.posts article.active',
+    articleTags: '.post-tags .list',
+    articleAuthor: '.post-author',
+    tagsList: 'ul.tags',
+    authorsList: 'ul.authors',
+  };
 
   const titleClickHandler = function(event){
     event.preventDefault();
@@ -24,7 +21,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     console.log(event);
 
     /* [DONE] remove class 'active' from all article links  */
-    const activeLinks = document.querySelectorAll(activeArticleLinkSelector);
+    const activeLinks = document.querySelectorAll(selectors.activeArticleLink);
 
     for(let activeLink of activeLinks){
       activeLink.classList.remove('active');
@@ -35,7 +32,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     clickedElement.classList.add('active');
 
     /* [DONE] remove class 'active' from all articles */
-    const activeArticles = document.querySelectorAll(activeArticleSelector);
+    const activeArticles = document.querySelectorAll(selectors.activeArticle);
 
     for(let activeArticle of activeArticles){
       activeArticle.classList.remove('active');
@@ -56,11 +53,11 @@ document.getElementById('test-button').addEventListener('click', function(){
   const generateTitleLinks = function(customSelector = ''){
 
     /* [DONE] remove list of links from left column */
-    const titleList = document.querySelector(titleListSelector);
+    const titleList = document.querySelector(selectors.titleList);
     titleList.innerHTML = '';
 
     /* [DONE] for each article */
-    const articles = document.querySelectorAll(articleSelector + customSelector);
+    const articles = document.querySelectorAll(selectors.article + customSelector);
     console.log(articles);
     let html = '';
     for(let article of articles){
@@ -70,7 +67,7 @@ document.getElementById('test-button').addEventListener('click', function(){
       console.log(articleId);
 
       /* [DONE] find title of an article */
-      const articleTitle = article.querySelector(articleTitleSelector).innerHTML;
+      const articleTitle = article.querySelector(selectors.articleTitle).innerHTML;
       console.log(articleTitle);
 
       /* [DONE] create HTML of a link */
@@ -92,22 +89,15 @@ document.getElementById('test-button').addEventListener('click', function(){
   generateTitleLinks();
 
   const calculateTagClass = function (count, params) {
-    /* find the difference between the most popular tag and the least popular*/
     const diff = count - params.min;
-
     const difference = params.max - params.min;
-
     const percentage = diff / difference;
-
     const classNumber = Math.floor(percentage * (cloudClassCount-1) + 1);
-
     return cloudClassPrefix + classNumber;
-
-  }
+  };
 
   const calculateTagsParams = function(tags) {
-    const params = {max:0, min:99999}
-
+    const params = {max:0, min:99999};
     for (let tag in tags){
       console.log(tag + ' is used ' + tags[tag] + ' times');
       if (tags[tag] > params.max){
@@ -116,10 +106,9 @@ document.getElementById('test-button').addEventListener('click', function(){
       if (tags[tag] < params.min){
         params.min = tags[tag];
       }
-
     }
     return params;
-  }
+  };
 
   const generateTags = function (){
 
@@ -127,14 +116,14 @@ document.getElementById('test-button').addEventListener('click', function(){
     let allTags = {};
 
     /* [DONE] find all articles */
-    const articles = document.querySelectorAll(articleSelector);
+    const articles = document.querySelectorAll(selectors.article);
     console.log(articles);
 
     /* [DONE] START LOOP: for every article: */
     for (let article of articles){
 
       /* [DONE] find tags wrapper */
-      const tagsWrapper = article.querySelector(articleTagsSelector);
+      const tagsWrapper = article.querySelector(selectors.articleTags);
       console.log(tagsWrapper);
 
       /* [DONE] make html variable with empty string */
@@ -156,7 +145,7 @@ document.getElementById('test-button').addEventListener('click', function(){
         console.log(linkHTML);
 
         /* [DONE] add generated code to html variable */
-        html = html + linkHTML;
+        html = html + linkHTML + ' ';
 
         /* [NEW - DONE] check if this link is NOT already in allTags */
         if(!allTags[tag]){
@@ -180,7 +169,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     }
 
     /* [NEW - DONE] find list of tags in right column */
-    const tagList = document.querySelector(tagsListSelector);
+    const tagList = document.querySelector(selectors.tagsList);
     console.log(tagList);
     /* [NEW - DONE] calculate what is the highest and the lowest number of appearances of all tags */
     const tagsParams = calculateTagsParams(allTags);
@@ -193,7 +182,7 @@ document.getElementById('test-button').addEventListener('click', function(){
     for(let tag in allTags) {
 
       /* [NEW - DONE] generate code of a link and add it to allTagsHTML */
-      allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' (' + allTags[tag] + ')</a></li>';
+      allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' (' + allTags[tag] + ') </a></li>';
       console.log(allTagsHTML);
       /* END LOOP: for each tag in allTags */
     }
@@ -273,13 +262,13 @@ document.getElementById('test-button').addEventListener('click', function(){
     const allAuthors = {};
 
     /* [DONE] find all articles */
-    const articles = document.querySelectorAll(articleSelector);
+    const articles = document.querySelectorAll(selectors.article);
 
     /* [DONE] START LOOP: for every article: */
     for (let article of articles) {
 
       /* [DONE] find author wrapper */
-      const authorWrapper = article.querySelector(articleAuthorSelector);
+      const authorWrapper = article.querySelector(selectors.articleAuthor);
       console.log(authorWrapper);
 
       /* [DONE] make html variable with empty string */
@@ -299,13 +288,15 @@ document.getElementById('test-button').addEventListener('click', function(){
       /* [NEW] check if this link is NOT already in allAuthors */
       if(!allAuthors[author]) {
 
-      /* [NEW] if it is not in allTags, add generated code to allAuthors object */
+        /* [NEW] if it is not in allTags, add generated code to allAuthors object */
         allAuthors[author] = 1;
       }
+
       /* if it is, increase it's value by 1 */
-        else {
-          allAuthors[author]++;
-        }
+      else {
+        allAuthors[author]++;
+      }
+
       /* [DONE] insert HTML of author into the author wrapper */
       authorWrapper.innerHTML = html;
       console.log(authorWrapper);
@@ -314,21 +305,22 @@ document.getElementById('test-button').addEventListener('click', function(){
     }
 
     /* [NEW] find list of tags in right column */
-    const authorsList = document.querySelector(authorsListSelector);
+    const authorsList = document.querySelector(selectors.authorsList);
     console.log(authorsList);
 
     /* [NEW] create variable for all links HTML code */
     let allAuthorsHTML = '';
 
     /* [NEW - DONE] START LOOP: for each tag in allAuthors: */
-      for (let author in allAuthors){
+    for (let author in allAuthors){
 
       /* [NEW - DONE] generate code of a link and add it to allAuthorsHTML */
-        allAuthorsHTML += '<li><a href="#author-'+ author + '"><span class="author-name">' + author + ' (' + allAuthors[author] + ')</span></a></li>';
+      allAuthorsHTML += '<li><a href="#author-'+ author + '"><span class="author-name">' + author + ' (' + allAuthors[author] + ')</span></a></li>';
 
 
       /* END LOOP: for each tag in allTags */
-      }
+    }
+
     /*[NEW - DONE] add HTML from allTagsHTML to tagList */
     authorsList.innerHTML = allAuthorsHTML;
 
